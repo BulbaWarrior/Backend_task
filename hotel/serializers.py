@@ -5,7 +5,7 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ['url', 'username', 'email', 'password', 'hotel']
+        fields = ['url', 'username', 'email', 'hotel']
 
 class HotelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -20,7 +20,7 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
 class RoomCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.RoomCategory
-        fields = '__all__'
+        fields = ['hotel', 'min_price', 'name', 'url']
 
 class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

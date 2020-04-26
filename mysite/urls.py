@@ -22,9 +22,9 @@ from hotel import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'hotels', views.HotelViewSet, basename='hotel')
-router.register(r'room_categories', views.RoomCategoryViewSet)
-router.register(r'rooms', views.RoomViewSet, basename='users')
-router.register(r'bookings', views.BookingViewSet)
+router.register(r'room_categories', views.RoomCategoryViewSet, basename='roomcategory')
+router.register(r'rooms', views.RoomViewSet, basename='room')
+router.register(r'bookings', views.BookingViewSet, basename='booking')
 
 
 # Wire up our API using automatic URL routing.
