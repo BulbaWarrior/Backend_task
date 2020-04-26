@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 
-from .managers import CustomUserManager
+from .managers import CustomUserManager, BookingManager
 
 
 class Hotel(models.Model):
@@ -46,11 +46,25 @@ class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date_check_in = models.DateTimeField()
     date_check_out = models.DateTimeField()
+    objects = BookingManager()
 
     def get_hotel(self):
         return room.room_category.hotel
 
     def is_valid(self):
-        if (self.date_check_in >= date_check_out):
+        if (self.date_check_in >= self.date_check_out):
             return False
-        # TODO: check for overlaps and if booking in the past
+        last_bookings = self.room.booking_set.filter(date_check_out__gt = self.date_check_in)
+        for booking in last_bookings:
+            if booking.date_check_in <= self.date_check_in <= booking.date_check_out:
+                return False
+            if booking.date_check_in <= self.date_check_out <= booking.date_check_out:
+                return False
+        return True
+
+    @classmethod
+    def create(cls, **kwargs):
+        booking = cls(kwargs)
+        if(not booking.is_valid()):
+            raise ValueError("booking dates are invalid")
+        return booking
