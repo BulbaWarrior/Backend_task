@@ -1,5 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
+from django.utils.translation import ugettext_lazy as _
+
+from .managers import CustomUserManager
 
 
 class Hotel(models.Model):
@@ -20,8 +23,17 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
-class CustomUser(User):
+class CustomUser(AbstractBaseUser):
+    email = models.EmailField(_('email address'), unique=True)
     hotel = models.ForeignKey(Hotel, null=True, on_delete=models.CASCADE)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
 
 class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)

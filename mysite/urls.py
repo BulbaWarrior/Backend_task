@@ -21,9 +21,9 @@ from hotel import views
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'hotels', views.HotelViewSet)
+router.register(r'hotels', views.HotelViewSet, basename='hotel')
 router.register(r'room_categories', views.RoomCategoryViewSet)
-router.register(r'rooms', views.RoomViewSet)
+router.register(r'rooms', views.RoomViewSet, basename='users')
 router.register(r'bookings', views.BookingViewSet)
 
 
