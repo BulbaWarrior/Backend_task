@@ -20,7 +20,8 @@ $python manage.py runserver
 API root is located at locahost:8000
 GET request permissions should be properly handled (user can only see objects, related to their hotel),
 however, other types of requests are not yet handled properly (user from one hotel can create a room for another hotel)
-Listing
+
+admin site is located at localhot:8000/admin
 
 
 Created users:
